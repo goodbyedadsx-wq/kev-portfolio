@@ -408,7 +408,7 @@
   </div>
 </section>
 
-  <section id="contact" style="padding:120px 64px; border-top:1px solid rgba(255,255,255,0.06); background:#0d0d0d;">
+<section id="contact" style="padding:120px 64px; border-top:1px solid rgba(255,255,255,0.06); background:#0d0d0d;">
   <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;">
 
     <!-- Left Side: Contact Info -->
@@ -441,31 +441,32 @@
 
     <!-- Right Side: Contact Form -->
     <div style="background:rgba(20,20,20,0.95); padding:32px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,0.6);">
-      <form style="display:grid; gap:20px;">
+      <form action="https://formspree.io/f/mojjqzyq" method="POST" style="display:grid; gap:20px;">
         <div style="display:flex; gap:20px; flex-wrap:wrap;">
           <div style="flex:1;">
             <label style="font-size:14px; color:#aaa; display:block; margin-bottom:6px;">Your Name</label>
-            <input type="text" placeholder="Your Name" style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;"/>
+            <input type="text" name="name" placeholder="Your Name" style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;" required/>
           </div>
           <div style="flex:1;">
             <label style="font-size:14px; color:#aaa; display:block; margin-bottom:6px;">Your Email</label>
-            <input type="email" placeholder="yourname@gmail.com" style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;"/>
+            <input type="email" name="email" placeholder="yourname@gmail.com" style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;" required/>
           </div>
         </div>
 
         <div style="display:flex; gap:20px; flex-wrap:wrap;">
           <div style="flex:1;">
             <label style="font-size:14px; color:#aaa; display:block; margin-bottom:6px;">Service Needed</label>
-            <select style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;">
-              <option>Select a service</option>
-              <option>FiveM Script</option>
-              <option>Discord Bot</option>
+            <select name="service" style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;" required>
+              <option value="">Select a service</option>
+              <option value="FiveM Script">FiveM Script</option>
+              <option value="Discord Bot">Discord Bot</option>
             </select>
           </div>
           <div style="flex:1;">
             <label style="font-size:14px; color:#aaa; display:block; margin-bottom:6px;">Budget Range</label>
-            <select style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;">
-              <option>Select budget range</option>
+            <select name="budget" style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff;" required>
+              <option value="">Select budget range</option>
+              <option>$10-$50</option>
               <option>$50-$100</option>
               <option>$100-$250</option>
               <option>$250+</option>
@@ -475,13 +476,34 @@
 
         <div>
           <label style="font-size:14px; color:#aaa; display:block; margin-bottom:6px;">Project Details</label>
-          <textarea placeholder="Tell me about your project..." style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff; min-height:120px;"></textarea>
+          <textarea name="message" placeholder="Tell me about your project..." style="width:100%; padding:14px; border-radius:12px; border:none; background:#1a1a1a; color:#fff; min-height:120px;" required></textarea>
         </div>
 
         <button type="submit" style="padding:14px 26px; background:#fff; color:#000; border:none; border-radius:999px; font-weight:600; cursor:pointer;">
           Send Message ✈️
         </button>
+
+        <p id="success-msg" style="color:#4ec9b0; display:none; margin-top:10px;">Thanks! Your message has been sent.</p>
       </form>
+
+      <script>
+        const form = document.querySelector('#contact form');
+        const successMsg = document.getElementById('success-msg');
+        form.addEventListener('submit', function(e) {
+          e.preventDefault(); // prevent default form submission
+          const data = new FormData(form);
+          fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          }).then(response => {
+            if (response.ok) {
+              successMsg.style.display = 'block';
+              form.reset();
+            }
+          });
+        });
+      </script>
     </div>
 
   </div>
@@ -494,17 +516,3 @@
     }
   </style>
 </section>
-
-  <script>
-    const links = document.querySelectorAll('nav a');
-    links.forEach(link => {
-      link.addEventListener('click', () => {
-        links.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
-  </script>
-</body>
-</html>
-
-
