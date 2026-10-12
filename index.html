@@ -125,6 +125,107 @@
       main { grid-template-columns: 1fr; padding: 40px 24px; }
       h1 { font-size: 42px; }
     }
+
+    /* 3D code-window controls */
+    .code-header .dot {
+      position: relative;
+      transform: translateZ(0);
+      box-shadow:
+        inset 0 2px 2px rgba(255,255,255,.55),
+        inset 0 -3px 3px rgba(0,0,0,.35),
+        0 4px 0 rgba(0,0,0,.55),
+        0 7px 13px rgba(0,0,0,.45);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    }
+    .code-header .dot:hover {
+      transform: translateY(-3px) scale(1.12);
+      box-shadow:
+        inset 0 2px 2px rgba(255,255,255,.7),
+        inset 0 -3px 3px rgba(0,0,0,.3),
+        0 6px 0 rgba(0,0,0,.55),
+        0 12px 18px rgba(0,0,0,.5);
+      filter: brightness(1.15);
+    }
+    .code-header .red {
+      background: radial-gradient(circle at 30% 25%, #ffaaa4 0%, #ff5f56 42%, #b91f19 100%);
+    }
+    .code-header .yellow {
+      background: radial-gradient(circle at 30% 25%, #ffe8a0 0%, #ffbd2e 42%, #b97700 100%);
+    }
+    .code-header .green {
+      background: radial-gradient(circle at 30% 25%, #aaffb4 0%, #27c93f 42%, #087b1b 100%);
+    }
+
+    /* Raised, glassy 3D skills panel */
+    .skills-3d {
+      position: relative;
+      isolation: isolate;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,.09), transparent 38%),
+        linear-gradient(145deg, #202020 0%, #121212 55%, #080808 100%) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -2px 0 rgba(0,0,0,.7),
+        0 2px 0 #292929,
+        0 5px 0 #171717,
+        0 12px 0 #0b0b0b,
+        0 25px 55px rgba(0,0,0,.65) !important;
+      transform: perspective(1000px) rotateX(2deg);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .skills-3d:hover {
+      transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.15),
+        0 3px 0 #292929,
+        0 7px 0 #171717,
+        0 14px 0 #0b0b0b,
+        0 32px 65px rgba(0,0,0,.72) !important;
+    }
+    .skills-3d-title {
+      text-shadow: 0 1px 0 #777, 0 3px 0 #111, 0 7px 15px rgba(0,0,0,.8);
+      letter-spacing: .3px;
+    }
+    .skills-3d > div:not(:first-child) strong {
+      text-shadow: 0 2px 5px rgba(0,0,0,.9);
+    }
+    .skills-3d > div:not(:first-child) > div {
+      box-shadow: inset 0 2px 4px rgba(0,0,0,.8), 0 2px 0 rgba(255,255,255,.035);
+    }
+    .skills-3d > div:not(:first-child) > div > div {
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 3px 8px rgba(255,255,255,.12);
+    }
+
+    /* Custom God Cross reticle cursor */
+    body, a, button, input, textarea, select { cursor: none; }
+    #god-cross-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 30px;
+      height: 30px;
+      z-index: 99999;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 0 4px rgba(255,255,255,.55));
+      transition: filter .12s ease, scale .12s ease;
+    }
+    #god-cross-cursor svg { width: 100%; height: 100%; overflow: visible; }
+    #god-cross-cursor .cursor-core {
+      fill: #fff;
+      stroke: #111;
+      stroke-width: 1.2;
+    }
+    #god-cross-cursor.is-hovering {
+      scale: 1.2;
+      filter: drop-shadow(0 0 7px rgba(255,255,255,.9));
+    }
+    @media (pointer: coarse) {
+      body, a, button, input, textarea, select { cursor: auto; }
+      #god-cross-cursor { display: none; }
+    }
+
   </style>
 </head>
 <body>
@@ -195,8 +296,8 @@
       </div>
     </div>
 
-    <div style="background:rgba(20,20,20,0.95); padding:28px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,0.6)">
-      <h3 style="margin-bottom:22px">My Skills</h3>
+    <div class="skills-3d" style="background:rgba(20,20,20,0.95); padding:28px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+      <h3 class="skills-3d-title" style="margin-bottom:22px">My Skills</h3>
 
       <div style="margin-bottom:18px">
         <strong>Lua</strong>
